@@ -77,7 +77,8 @@ pkg_install <- function(pkg, lib = .libPaths()[[1L]], upgrade = FALSE,
     function(...) get("pkg_install_make_plan", asNamespace("pak"))(...),
     list(pkg = pkg, lib = lib, upgrade = upgrade, ask = ask,
          start = start, dependencies = dependencies,
-         loaded = loaded_packages(lib)))
+         loaded = loaded_packages(lib),
+         ignore_idle_error = TRUE))
 
   unloaded <- handle_status(status, lib, ask)$unloaded
 

@@ -22,7 +22,17 @@ remote <- function(func, args = list()) {
       state <- rs$get_state()
     }
   }
-  if (state != "idle") stop("Subprocess is busy or cannot start")
+  if (state != "idle") {
+    if ("ignore_idle_error" %in% names(args)) {
+      if (args$ignore_idle_error) {
+        message("Subprocess is busy or cannot start")
+      } else {
+        stop("Subprocess is busy or cannot start")
+      } 
+    } else {
+      stop("Subprocess is busy or cannot start")
+    }
+  } 
 
   func2 <- func
   subst_args <- list(
